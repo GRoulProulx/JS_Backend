@@ -1,0 +1,31 @@
+{
+    "name": "backend",
+    "version": "1.0.0",
+    "description": "Une api de films",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node index.js",
+        "dev": "nodemon index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/max-lacasse-maisonneuve/41f_620_backend.git"
+    },
+    "author": "Maxime Lacasse",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/max-lacasse-maisonneuve/41f_620_backend/issues"
+    },
+    "homepage": "https://github.com/max-lacasse-maisonneuve/41f_620_backend#readme",
+    "dependencies": {
+        "dayjs": "^1.11.13",
+        "dotenv": "^16.4.7",
+        "express": "^4.21.2",
+        "express-validator": "^7.2.1",
+        "firebase-admin": "^13.1.0"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.9"
+    }
+}

@@ -1,0 +1,20 @@
+h1 {
+    font-size: 36px;
+    color: rebeccapurple;
+}
+
+h2 {
+    font-size: 24px;
+    color: darkblue;
+}
+
+p {
+    font-size: 16px;
+    color: black;
+}
+
+a {
+    color: blue;
+    text-decoration: none;
+    font-weight: bold;
+}
