@@ -3,6 +3,8 @@ const express = require("express");
 const dotenv = require("dotenv");
 const path = require("path");
 const db = require("./config/db");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 //Importation de la librairie de date
 const dayjs = require("dayjs");
@@ -112,7 +114,7 @@ serveur.get("/soundtracks/composer/:composer", async (req, res) => {
     const soundtracks = [];
 
     const docRefs = await db.collection("soundtracks").where("composer", "==", composer).orderBy("composer").get();
-
+    console.log(composer);
     docRefs.forEach((doc) => {
         const soundtrack = { id: doc.id, ...doc.data() };
         soundtracks.push(soundtrack);
@@ -133,7 +135,6 @@ serveur.get(
             .notEmpty()
             .isString()
             .isLength({ min: 20, max: 20 })
-            .matches(/([A-z0-9\-\_]){20}/),
     ],
     async (req, res) => {
         //Destructuration
@@ -177,8 +178,6 @@ serveur.post("/soundtracks/initialiser", (req, res) => {
     try {
         const soundtracks = require("./data/soundtracks");
 
-        //TODO: Vérifier si le soundtrack est déjà dans la base de données
-
         soundtracks.forEach(async (soundtrack) => {
             await db.collection("soundtracks").add(soundtrack);
         });
@@ -206,6 +205,50 @@ serveur.delete("/soundtracks/:id", async (req, res) => {
     return res.status(204).json({ msg: "La bande sonore a été supprimé" });
 });
 
+serveur.post("/users/register", [check("email").escape().trim().notEmpty().isEmail().normalizeEmail(), check("password").escape().trim().notEmpty()], async (req, res) => {
+    // Validation des infos de l'utilisateur
+
+    // recupération des infos du body avec id et password
+    const { email, password } = req.body;
+    // vérification de l'existence de l'utilisateur
+    const userRefs = await db.collection("users").where("email", "==", email).get();
+    
+    // Encryption du password
+    const hash = await bcrypt.hash(password, 10);
+    const user = { ...req.body, password: hash };
+    if (userRefs.docs.length > 0) {
+        return res.status(400).json({ msg: "Utilisateur existant" });
+    }
+    // Ajout de l'utilisateur
+    await db.collection("user").add(user);
+
+    return res.status(201).json({ msg: "L'utilisateur a été créé" });
+});
+ 
+serveur.post("/users/login", async (req, res) => { 
+
+    const { email, password } = req.body;
+
+    const userRefs = await db.collection("users").where("email", "==", email).get();
+
+    if (userRefs.docs.length == 0) {
+        return res.status(400).json({ msg: "Cet utilisateur existe déjà" });
+    }
+    const user = userRefs.docs[0].data();
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (passwordMatch) {
+        delete user.password;
+        const option = {
+            "expiresIn": "1d",
+        }
+        const token = jwt.sign(user, process.env.JWT_SECRET, option);
+        return res.status(200).json({ msg: "Connexion réussie", token });
+    }else{
+        return res.status(400).json({ msg: "Mot de passe incorrect" });
+    }
+ });
+
+
 //Ressources 404
 serveur.use((req, res) => {
     res.statusCode = 404;
@@ -213,5 +256,5 @@ serveur.use((req, res) => {
 });
 
 serveur.listen(process.env.PORT, () => {
-    console.log(`le serveur est démarré sur le port ${process.env.PORT}`);
+    console.log(`Server has started on port ${process.env.PORT}`);
 });

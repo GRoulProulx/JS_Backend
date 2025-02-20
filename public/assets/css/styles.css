@@ -1,20 +1,29 @@
+*  {
+    
+    background-color: rgb(239, 239, 255);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
 h1 {
-    font-size: 36px;
+    font-size: 64px;
     color: rebeccapurple;
 }
 
 h2 {
-    font-size: 24px;
-    color: darkblue;
+    font-size: 48px;
+    color: rebeccapurple;
 }
 
+h3 {
+    font-size: 32px;
+    color: rebeccapurple;
+}
 p {
-    font-size: 16px;
-    color: black;
+    font-size: 18px;
+    
 }
 
 a {
-    color: blue;
     text-decoration: none;
     font-weight: bold;
 }
