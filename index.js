@@ -16,15 +16,15 @@ dayjs.locale("fr"); //On change la langue
 dayjs.extend(utc);
 
 const { check, validationResult } = require("express-validator");
-const serveur = express();
+const server = express();
 dotenv.config();
 
-serveur.use(express.json()); //Permet de passer de la donnée json dans le body
-serveur.use(express.urlencoded({ extended: true })); //Permet de passer de la donnée avec formulaire dans le body
+server.use(express.json()); //Permet de passer de la donnée json dans le body
+server.use(express.urlencoded({ extended: true })); //Permet de passer de la donnée avec formulaire dans le body
 
 //Permettre l'accès au dossier
 const dossierPublic = path.join(__dirname, "public");
-serveur.use(express.static(dossierPublic));
+server.use(express.static(dossierPublic));
 
 //Middleware
 function authentifier(req, res, next) {
@@ -39,7 +39,7 @@ function authentifier(req, res, next) {
 
 
 
-serveur.get(
+server.get(
     "/soundtracks",
     [
         check("order").escape().trim().optional().isLength({ max: 100 }),
@@ -54,11 +54,11 @@ serveur.get(
                 return res.status(400).json({ msg: "Données invalides" });
             }
 
-            //TEST de date
+            //TEST de date 
             // const date = dayjs("2025-02-17T15:30:03Z");
             // console.log(date.format("Jour:dddd le DD MM YYYY"));
 
-            const { order = "title", direction = "asc", limit = 100, start = 0 } = req.query;
+            let { order = "title", direction = "asc", limit = 100, start = 0 } = req.query;
 
             const soundtracks = [];
             const docRefs = await db
@@ -84,12 +84,12 @@ serveur.get(
     }
 );
 
-serveur.get("/soundtracks/categories/:categorie", async (req, res) => {
-    const { categorie } = req.params;
+server.get("/soundtracks/genre/:genre", async (req, res) => {
+    const { genre } = req.params;
     const soundtracks = [];
-    console.log(categorie);
+    console.log(genre);
 
-    const docRefs = await db.collection("soundtracks").where("genre", "array-contains", categorie).get();
+    const docRefs = await db.collection("soundtracks").where("genre", "array-contains", genre).get();
 
     docRefs.forEach((doc) => {
         const soundtrack = { id: doc.id, ...doc.data() };
@@ -102,7 +102,7 @@ serveur.get("/soundtracks/categories/:categorie", async (req, res) => {
     return res.status(200).json(soundtracks);
 });
 
-serveur.get("/soundtracks/composer/:composer", async (req, res) => {
+server.get("/soundtracks/composer/:composer", async (req, res) => {
     let { composer } = req.params;
 
     composer = composer.split("-");
@@ -126,7 +126,7 @@ serveur.get("/soundtracks/composer/:composer", async (req, res) => {
     return res.status(200).json(soundtracks);
 });
 
-serveur.get(
+server.get(
     "/soundtracks/:id",
     [
         check("id")
@@ -146,7 +146,7 @@ serveur.get(
     }
 );
 
-serveur.post(
+server.post(
     "/soundtracks",
     [
         check("title").escape().trim().notEmpty().isLength({ max: 300 }).withMessage("Le titre est obligatoire"),
@@ -174,7 +174,7 @@ serveur.post(
     }
 );
 
-serveur.post("/soundtracks/initialiser", (req, res) => {
+server.post("/soundtracks/initialiser", (req, res) => {
     try {
         const soundtracks = require("./data/soundtracks");
 
@@ -190,7 +190,7 @@ serveur.post("/soundtracks/initialiser", (req, res) => {
     }
 });
 
-serveur.put("/soundtracks/:id", async (req, res) => {
+server.put("/soundtracks/:id", async (req, res) => {
     const { id } = req.params;
     const { body } = req;
 
@@ -198,14 +198,14 @@ serveur.put("/soundtracks/:id", async (req, res) => {
     return res.status(201).json({ msg: "La bande sonore a été modifié", soundtrack: body });
 });
 
-serveur.delete("/soundtracks/:id", async (req, res) => {
+server.delete("/soundtracks/:id", async (req, res) => {
     const { id } = req.params;
 
     await db.collection("soundtracks").doc(id).delete();
     return res.status(204).json({ msg: "La bande sonore a été supprimé" });
 });
 
-serveur.post("/users/register", [check("email").escape().trim().notEmpty().isEmail().normalizeEmail(), check("password").escape().trim().notEmpty()], async (req, res) => {
+server.post("/users/register", [check("email").escape().trim().notEmpty().isEmail().normalizeEmail(), check("password").escape().trim().notEmpty()], async (req, res) => {
     // Validation des infos de l'utilisateur
 
     // recupération des infos du body avec id et password
@@ -214,7 +214,7 @@ serveur.post("/users/register", [check("email").escape().trim().notEmpty().isEma
     const userRefs = await db.collection("users").where("email", "==", email).get();
     
     // Encryption du password
-    const hash = await bcrypt.hash(password, 10);
+    const hash = await bcrypt.hash(password, 10); 
     const user = { ...req.body, password: hash };
     if (userRefs.docs.length > 0) {
         return res.status(400).json({ msg: "Utilisateur existant" });
@@ -225,7 +225,7 @@ serveur.post("/users/register", [check("email").escape().trim().notEmpty().isEma
     return res.status(201).json({ msg: "L'utilisateur a été créé" });
 });
  
-serveur.post("/users/login", async (req, res) => { 
+server.post("/users/login", async (req, res) => { 
 
     const { email, password } = req.body;
 
@@ -250,11 +250,11 @@ serveur.post("/users/login", async (req, res) => {
 
 
 //Ressources 404
-serveur.use((req, res) => {
+server.use((req, res) => {
     res.statusCode = 404;
     return res.status(404).json({ msg: "Ressource non trouvée" });
 });
 
-serveur.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, () => {
     console.log(`Server has started on port ${process.env.PORT}`);
 });

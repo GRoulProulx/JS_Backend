@@ -2,7 +2,7 @@ const soundtracks = [
     {
         title: "2001: A Space Odyssey",
         composer: "Various Artists",
-        year: 1968,
+        year: "1968",
         genre: ["Orchestral", "Futuristic", "Ambient"],
         label: "MGM Records",
         image: "space.jpg",
@@ -11,7 +11,7 @@ const soundtracks = [
     {
         title: "For a Few Dollars More",
         composer: "Ennio Morricone",
-        year: 1965,
+        year: "1965",
         genre: ["Western", "Spaghetti Western", "Dramatic"],
         label: "RCA Victor",
         image: "dollarsmore.jpg",
@@ -20,7 +20,7 @@ const soundtracks = [
     {
         title: "Once Upon a Time in the West",
         composer: "Ennio Morricone",
-        year: 1968,
+        year: "1968",
         genre: ["Western", "Epic", "Orchestral"],
         label: "RCA Victor",
         image: "west.jpg",
@@ -29,7 +29,7 @@ const soundtracks = [
     {
         title: "The Good, the Bad and the Ugly",
         composer: "Ennio Morricone",
-        year: 1966,
+        year: "1966",
         genre: ["Western", "Spaghetti Western", "Iconic"],
         label: "RCA Victor",
         image: "goodbadugly.jpg",
@@ -38,7 +38,7 @@ const soundtracks = [
     {
         title: "Star Wars: Episode IV - A New Hope",
         composer: "John Williams",
-        year: 1977,
+        year: "1977",
         genre: ["Orchestral", "Sci-Fi", "Adventure"],
         label: "20th Century Records",
         image: "newhope.jpg",
@@ -47,7 +47,7 @@ const soundtracks = [
     {
         title: "The Godfather",
         composer: "Nino Rota",
-        year: 1972,
+        year: "1972",
         genre: ["Orchestral", "Dramatic", "Classic"],
         label: "Paramount Music",
         image: "godfather.jpg",
@@ -56,7 +56,7 @@ const soundtracks = [
     {
         title: "Jurassic Park",
         composer: "John Williams",
-        year: 1993,
+        year: "1993",
         genre: ["Orchestral", "Adventure", "Action"],
         label: "MCA Records",
         image: "jurassic.jpg",
@@ -65,7 +65,7 @@ const soundtracks = [
     {
         title: "Blade Runner",
         composer: "Vangelis",
-        year: 1982,
+        year: "1982",
         genre: ["Electronic", "Futuristic", "Noir"],
         label: "Polydor Records",
         image: "bladerunner.jpg",
@@ -74,7 +74,7 @@ const soundtracks = [
     {
         title: "The Dark Knight",
         composer: "Hans Zimmer",
-        year: 2008,
+        year: "2008",
         genre: ["Orchestral", "Dark", "Action"],
         label: "Warner Bros. Records",
         image: "darkknight.jpg",
@@ -83,7 +83,7 @@ const soundtracks = [
     {
         title: "Inception",
         composer: "Hans Zimmer",
-        year: 2010,
+        year: "2010",
         genre: ["Orchestral", "Mind-Bending", "Thriller"],
         label: "Reprise Records",
         image: "inception.jpg",
@@ -92,7 +92,7 @@ const soundtracks = [
     {
         title: "Pulp Fiction",
         composer: "Various Artists",
-        year: 1994,
+        year: "1994",
         genre: ["Eclectic", "Retro"],
         label: "MCA Records",
         image: "pulpfiction.jpg",
@@ -101,7 +101,7 @@ const soundtracks = [
     {
         title: "The Lord of the Rings: The Fellowship of the Ring",
         composer: "Howard Shore",
-        year: 2001,
+        year: "2001",
         genre: ["Orchestral", "Fantasy", "Epic"],
         label: "Reprise Records",
         image: "lordoftherings.jpg",
@@ -110,7 +110,7 @@ const soundtracks = [
     {
         title: "Gladiator",
         composer: "Hans Zimmer",
-        year: 2000,
+        year: "2000",
         genre: ["Orchestral", "Epic", "Historical"],
         label: "Decca Records",
         image: "gladiator.jpg",
@@ -119,7 +119,7 @@ const soundtracks = [
     {
         title: "Jackie Brown",
         composer: "Various Artists",
-        year: 1997,
+        year: "1997",
         genre: ["Soul", "Blaxploitation"],
         label: "Maverick Records",
         image: "jackie.jpg",
@@ -128,7 +128,7 @@ const soundtracks = [
     {
         title: "Superfly",
         composer: "Curtis Mayfield",
-        year: 1972,
+        year: "1972",
         genre: ["Funk", "Soul", "Blaxploitation"],
         label: "Curtom Records",
         image: "superfly.jpg",
@@ -137,7 +137,7 @@ const soundtracks = [
     {
         title: "Purple Rain",
         composer: "Prince and The Revolution",
-        year: 1984,
+        year: "1984",
         genre: ["Pop", "Rock", "R&B"],
         label: "Warner Bros. Records",
         image: "purplerain.jpg",
@@ -146,7 +146,7 @@ const soundtracks = [
     {
         title: "Reservoir Dogs",
         composer: "Various Artists",
-        year: 1992,
+        year: "1992",
         genre: ["Soundtrack", "Rock", "Retro"],
         label: "MCA Records",
         image: "dogs.jpg",
@@ -155,7 +155,7 @@ const soundtracks = [
     {
         title: "Once Upon a Time in Hollywood",
         composer: "Various Artists",
-        year: 2019,
+        year: "2019",
         genre: ["Soundtrack", "Retro", "Rock"],
         label: "Sony Music",
         image: "timeinhollywood.jpg",
@@ -164,7 +164,7 @@ const soundtracks = [
     {
         title: "The Thing",
         composer: "Ennio Morricone",
-        year: 1982,
+        year: "1982",
         genre: ["Orchestral", "Horror", "Suspense"],
         label: "Varèse Sarabande",
         image: "thething.jpg",
