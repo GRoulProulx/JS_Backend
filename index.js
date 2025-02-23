@@ -24,10 +24,10 @@ server.use(express.static(dossierPublic));
 
 //Middleware
 
-/* function authentifier(req, res, next) {
+function authentifier(req, res, next) {
     console.log("Authentification en cours");
     next();
-} */
+}
 
 //Ressources 404
 server.use((req, res) => {

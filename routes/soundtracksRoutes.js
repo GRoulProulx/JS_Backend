@@ -3,16 +3,20 @@ const router = express.Router();
 const db = require("../config/db");
 const { check, validationResult } = require("express-validator");
 
-
-
-/**
+/*
  * Route servant à récuperer tous les bandes sonores de la base de données.
- *  On peut ajouter des paramètres de requête pour filtrer les données, pour avoir les filtres désirés.
+ * On peut ajouter des paramètres de requête pour filtrer les données, pour avoir les filtres désirés.
  */
 router.get(
     "/",
     [
-        check("order").escape().trim().optional().isLength({ max: 100 }),
+        check("limit").optional().isInt({ min: 1, max: 100 }).toInt(),
+        check("start").optional().isInt({ min: 0 }).toInt(),
+        check("order")
+            .escape()
+            .trim()
+            .optional()
+            .isIn(["title", "year", "composer"]),
         check("direction").escape().trim().optional().isIn(["asc", "desc"]),
     ],
     async (req, res) => {
@@ -27,13 +31,17 @@ router.get(
             let {
                 order = "title",
                 direction = "asc",
-                limit = 5,
+                limit = 30,
                 start = 0,
+                /* filterCategory = "year",
+                filterSymbol = ">",
+                filterValue = "1990", */
             } = req.query;
 
             const soundtracks = [];
             const docRefs = await db
                 .collection("soundtracks")
+                /* .where(filterCategory, filterSymbol, filterValue) */
                 .orderBy(order, direction)
                 .limit(Number(limit))
                 .offset(Number(start))
@@ -57,60 +65,78 @@ router.get(
     }
 );
 
-/**
+/*
  * Route pour récupérer les bandes sonores par leur genre
  */
-router.get("/genre", async (req, res) => {
-    const { genre } = req.params;
-    const soundtracks = [];
-    console.log(genre);
+router.get(
+    "/genre/:genre",
+    [
+        check("genre")
+            .trim()
+            .notEmpty()
+            .isLength({ min: 2, max: 50 })
+    ],
+    async (req, res) => {
+        const { genre } = req.params;
+        const soundtracks = [];
+        console.log(genre);
 
-    const docRefs = await db
-        .collection("soundtracks")
-        .where("genre", "array-contains", genre)
-        .get();
+        const docRefs = await db
+            .collection("soundtracks")
+            .where("genre", "array-contains", genre)
+            .get();
 
-    docRefs.forEach((doc) => {
-        const soundtrack = { id: doc.id, ...doc.data() };
-        soundtracks.push(soundtrack);
-    });
+        docRefs.forEach((doc) => {
+            const soundtrack = { id: doc.id, ...doc.data() };
+            soundtracks.push(soundtrack);
+        });
 
-    if (soundtracks.length == 0) {
-        return res.status(404).json({ msg: "Aucune bande sonore trouvé" });
+        if (soundtracks.length == 0) {
+            return res.status(404).json({ msg: "Aucune bande sonore trouvé" });
+        }
+        return res.status(200).json(soundtracks);
     }
-    return res.status(200).json(soundtracks);
-});
+);
 
-/**
+/*
  * Route pour récupérer les bandes sonores par leur compositeur
  */
-router.get("/composer", async (req, res) => {
-    let { composer } = req.params;
+router.get(
+    "/composer/:composer",
+    [
+        check("composer")
+            .trim()
+            .notEmpty()
+            .isLength({ min: 2, max: 100 })       
+    ],
+    async (req, res) => {
+        let { composer } = req.params;
 
-    composer = composer.split("-");
-    composer.forEach((piece, index) => {
-        composer[index] = piece[0].toUpperCase() + piece.slice(1);
-    });
-    composer = composer.join(" ");
+        composer = composer.split("-");
+        composer.forEach((piece, index) => {
+            composer[index] = piece[0].toUpperCase() + piece.slice(1);
+        });
+        composer = composer.join(" ");
 
-    const soundtracks = [];
+        const soundtracks = [];
 
-    const docRefs = await db
-        .collection("soundtracks")
-        .where("composer", "==", composer)
-        .orderBy("composer")
-        .get();
-    console.log(composer);
-    docRefs.forEach((doc) => {
-        const soundtrack = { id: doc.id, ...doc.data() };
-        soundtracks.push(soundtrack);
-    });
+        const docRefs = await db
+            .collection("soundtracks")
+            .where("composer", "==", composer)
+            .orderBy("composer")
+            .get();
+        console.log(composer);
+        docRefs.forEach((doc) => {
+            const soundtrack = { id: doc.id, ...doc.data() };
+            soundtracks.push(soundtrack);
+        });
 
-    if (soundtracks.length == 0) {
-        return res.status(404).json({ msg: "Aucune bande sonore trouvé" });
+        if (soundtracks.length == 0) {
+            return res.status(404).json({ msg: "Aucune bande sonore trouvé" });
+        }
+        return res.status(200).json(soundtracks);
     }
-    return res.status(200).json(soundtracks);
-});
+);
 
 router.get(
     "/:id",
@@ -131,7 +157,7 @@ router.get(
         return res.json(soundtrack);
     }
 );
-/**
+/*
  * Création d'une bande sonore
  */
 router.post(
@@ -164,14 +190,14 @@ router.post(
     }
 );
 
-/**
+/*
  * Route servant à initialiser la base de données
  */
 
 router.post("/init", (req, res) => {
     try {
         const soundtracks = require("../data/soundtracks");
-        
+
         soundtracks.forEach(async (soundtrack) => {
             await db.collection("soundtracks").add(soundtrack);
         });
@@ -184,28 +210,40 @@ router.post("/init", (req, res) => {
     }
 });
 
-/**
+/*
  * Route servant à modifier une bande sonore
  */
-router.put("/:id", async (req, res) => {
-    const { id } = req.params;
-    const { body } = req;
+router.put(
+    "/:id",
+    [
+        check("id").trim().notEmpty().isString().isLength({ min: 20, max: 30 })
+    ],
 
-    await db.collection("soundtracks").doc(id).update(body);
-    return res
-        .status(201)
-        .json({ msg: "La bande sonore a été modifié", soundtrack: body });
-});
+    async (req, res) => {
+        const { id } = req.params;
+        const { body } = req;
 
-/**
+        await db.collection("soundtracks").doc(id).update(body);
+        return res
+            .status(201)
+            .json({ msg: "La bande sonore a été modifié", soundtrack: body });
+    }
+);
+
+/*
  * Route servant à supprimer une bande sonore
  */
-router.delete("/:id", async (req, res) => {
-    const { id } = req.params;
+router.delete(
+    "/:id",
+    [check("id").trim().notEmpty().isString().isLength({ min: 20, max: 20 })],
 
-    await db.collection("soundtracks").doc(id).delete();
+    async (req, res) => {
+        const { id } = req.params;
 
-    return res.status(204).json({ msg: "La bande sonore a été supprimé" });
-});
+        await db.collection("soundtracks").doc(id).delete();
+
+        return res.status(204).json({ msg: "La bande sonore a été supprimé" });
+    }
+);
 
 module.exports = router;

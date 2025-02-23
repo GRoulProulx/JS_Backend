@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="assets/css/styles.css" />
     </head>
     <body>
-        <h1>API Soundtracks</h1>
+        <h1>API soundtracks</h1>
         <h2>Documentation</h2>
         <p>
             Permet d'affichier, modifier ou de supprimer des bandes sonores à
@@ -20,7 +20,7 @@
         </p>
         <p>
             <small
-                >API - Soundtracks -
+                >API - soundtracks -
                 <a href="https://projetjs-backend.onrender.com/"
                     >Demo sur render</a
                 ></small
@@ -28,10 +28,16 @@
         </p>
         <hr />
         <h2>Routes</h2>
-        <h3>Obtenir toutes les bande sonores de la base de donnée.</h3>
-        <h4>GET /Soundtracks</h4>
-        <code>http://www.votredomaine.com/Soundtracks/init</code>
+        <h3>Récupération de toutes les bande sonores.</h3>
+        <h4>GET /soundtracks</h4>
+        <code
+            >http://www.votredomaine.com/soundtracks/init</code
+        >
         <p>Paramètres possibles:</p>
+        <code
+            >http://www.votredomaine.com/soundtracks?=limit2&orderBy=composer&direction=asc</code
+        >
+        
         <p>orderBy</p>
         <ul>
             <li>title</li>
@@ -48,12 +54,12 @@
             <li>un chiffre entier</li>
         </ul>
         <h3>Accès à une bande sonore particulière.</h3>
-        <h4>GET /Soundtracks/{id}</h4>
-        <code>http://www.votredomaine.com/Soundtracks</code>
+        <h4>GET /soundtracks/{id}</h4>
         <p>Paramètre requis: {id} un indentifiant d'une bande sonore</p>
+        <code>http://www.votredomaine.com/soundtracks</code>
         <h3>Ajout d'une nouvelle bande sonore.</h3>
-        <h4>POST /Soundtracks</h4>
-        <code>http://www.votredomaine.com/Soundtracks</code>
+        <h4>POST /soundtracks</h4>
+        <code>http://www.votredomaine.com/soundtracks</code>
         <p>
             Paramètre requis: un objet <em>sountracks</em> dans le corps d'une
             rêquete.
@@ -66,10 +72,50 @@
             genre: ["genre 1", "genre 2", "genre 3"],<br />
             label: "maison de disques",<br />
             image: "image.jpg",<br />
-            track: { <br> song: "Titre de la chanson",<br />
+            track: [ <br />
+            { <br />
+            song: "Titre de la chanson",<br />
             link: "Lien youtube ou autre", } <br />
-            }</code
+            }]</code
         >
-        <h3></h3>
+        <h3>Modification d'une bande sonore.</h3>
+        <h4>PUT /soundtrack/{id}</h4>
+        <p>Paramètre requis:</p>
+        <br />
+        <ul>
+            <li>{id} un indentifiant d'une bande sonore</li>
+            <li>un objet <em>sountracks</em> dans le corps d'une
+            rêquete.</li>
+        </ul>
+        <code>
+            const soundtracks = { <br />
+            title: "titre du film de la bande sonore",<br />
+            composer: "compositeur",<br />
+            year: année de sorti,<br />
+            genre: ["genre 1", "genre 2", "genre 3"],<br />
+            label: "maison de disques",<br />
+            image: "image.jpg",<br />
+            track: [ <br />
+            { <br />
+            song: "Titre de la chanson",<br />
+            link: "Lien youtube ou autre", } <br />
+            }]</code>
+        <h3>Suppression d'une bande sonore.</h3>
+        <h4>DELETE /soundtrack/{id}</h4>
+        <p>Paramètre requis: l'indentifiant de la bande sonore.</p>
+        <h3>Création d'un utilisateur:</h3>
+        <h4>POST /register</h4>
+        <p>
+            Paramètre requis, information sur l'utilisateur: <br />
+            <code>
+                {<br />
+                "email": "admin@gmail.com",<br />
+                "password": "12345"<br />
+                }
+            </code>
+        </p>
+        <h3>Connexion d'un utilisateur:</h3>
+        <h4>POST /login</h4>
+        <p>Route pour se connecter.</p>
     </body>
 </html>

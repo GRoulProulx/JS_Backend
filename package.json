@@ -1,7 +1,7 @@
 {
     "name": "backend",
     "version": "1.0.0",
-    "description": "Une api de films",
+    "description": "Une api de bande sononre",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,14 +10,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/max-lacasse-maisonneuve/41f_620_backend.git"
+        "url": "git+https://github.com/GRoulProulx/JS_Backend.git"
     },
-    "author": "Maxime Lacasse",
+    "author": "Guillaume Proulx",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/max-lacasse-maisonneuve/41f_620_backend/issues"
+        "url": "https://github.com/GRoulProulx/JS_Backend/issues"
     },
-    "homepage": "https://github.com/max-lacasse-maisonneuve/41f_620_backend#readme",
+    "homepage": "https://github.com/GRoulProulx/JS_Backend#readme",
     "dependencies": {
         "bcrypt": "^5.1.1",
         "dayjs": "^1.11.13",
