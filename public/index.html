@@ -6,14 +6,27 @@
         <title>Document</title>
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" href="assets/css/styles.css" />
-        
     </head>
     <body>
         <h1>API Soundtracks</h1>
         <h2>Documentation</h2>
-        <p>Permet d'affichier, modifier ou de supprimer des bandes sonores à partir d'une base de donnée. <br>Les informations suivantes vous aiderons a naviguer cette API. <a href="https://github.com/GRoulProulx/JS_Backend">Le lien du code Github.</a></p>
-        <p><small>API - Soundtracks</small></p>
-        <hr>
+        <p>
+            Permet d'affichier, modifier ou de supprimer des bandes sonores à
+            partir d'une base de donnée. <br />Les informations suivantes vous
+            aiderons a naviguer cette API.
+            <a href="https://github.com/GRoulProulx/JS_Backend"
+                >Le lien du code Github.</a
+            >
+        </p>
+        <p>
+            <small
+                >API - Soundtracks -
+                <a href="https://projetjs-backend.onrender.com/"
+                    >Demo sur render</a
+                ></small
+            >
+        </p>
+        <hr />
         <h2>Routes</h2>
         <h3>Obtenir toutes les bande sonores de la base de donnée.</h3>
         <h4>GET /Soundtracks</h4>
@@ -23,7 +36,6 @@
         <ul>
             <li>title</li>
             <li>composer</li>
-            <li>label</li>
             <li>year</li>
         </ul>
         <p>direction</p>
@@ -42,16 +54,22 @@
         <h3>Ajout d'une nouvelle bande sonore.</h3>
         <h4>POST /Soundtracks</h4>
         <code>http://www.votredomaine.com/Soundtracks</code>
-        <p>Paramètre requis: un objet <em>sountracks</em> dans le corps d'une rêquete.</p>
-        <code>const soundtracks = { <br>
-        title: "titre du film de la bande sonore",<br>
-        composer: "compositeur",<br>
-        year: 1968,<br>
-        genre: ["genre 1", "genre 2", "genre 3"],<br>
-        label: "maison de disques",<br>
-        image: "space.jpg",<br>
-        link: "https://www.youtube.com/watch?v=rcC6B-i28YE"
-        }</code>
+        <p>
+            Paramètre requis: un objet <em>sountracks</em> dans le corps d'une
+            rêquete.
+        </p>
+        <code>
+            const soundtracks = { <br />
+            title: "titre du film de la bande sonore",<br />
+            composer: "compositeur",<br />
+            year: année de sorti,<br />
+            genre: ["genre 1", "genre 2", "genre 3"],<br />
+            label: "maison de disques",<br />
+            image: "image.jpg",<br />
+            track: { song: "Titre de la chanson",<br />
+            link: "Lien youtube ou autre", } <br />
+            }</code
+        >
         <h3></h3>
     </body>
 </html>

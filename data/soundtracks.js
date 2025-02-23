@@ -6,7 +6,10 @@ const soundtracks = [
         genre: ["Orchestral", "Futuristic", "Ambient"],
         label: "MGM Records",
         image: "space.jpg",
-        link: "https://www.youtube.com/watch?v=rcC6B-i28YE",
+        track: {
+            song: "Also Sprach Zarathustra",
+            link: "https://www.youtube.com/watch?v=rcC6B-i28YE",
+        },
     },
     {
         title: "For a Few Dollars More",
@@ -15,7 +18,10 @@ const soundtracks = [
         genre: ["Western", "Spaghetti Western", "Dramatic"],
         label: "RCA Victor",
         image: "dollarsmore.jpg",
-        link: "https://www.youtube.com/watch?v=zTDDLlEbLi4",
+        track: {
+            song: "For a Few Dollars More (Main Title)",
+            link: "https://www.youtube.com/watch?v=zTDDLlEbLi4",
+        },
     },
     {
         title: "Once Upon a Time in the West",
@@ -24,7 +30,10 @@ const soundtracks = [
         genre: ["Western", "Epic", "Orchestral"],
         label: "RCA Victor",
         image: "west.jpg",
-        link: "https://www.youtube.com/watch?v=6MZw_Iv0wdU",
+        track: {
+            song: "Once Upon a Time in the West (Main Theme)",
+            link: "https://www.youtube.com/watch?v=6MZw_Iv0wdU",
+        },
     },
     {
         title: "The Good, the Bad and the Ugly",
@@ -33,7 +42,10 @@ const soundtracks = [
         genre: ["Western", "Spaghetti Western", "Iconic"],
         label: "RCA Victor",
         image: "goodbadugly.jpg",
-        link: "https://www.youtube.com/watch?v=lPdMDxh5ylc",
+        track: {
+            song: "The Good, the Bad and the Ugly (Main Title)",
+            link: "https://www.youtube.com/watch?v=lPdMDxh5ylc",
+        },
     },
     {
         title: "Star Wars: Episode IV - A New Hope",
@@ -42,7 +54,10 @@ const soundtracks = [
         genre: ["Orchestral", "Sci-Fi", "Adventure"],
         label: "20th Century Records",
         image: "newhope.jpg",
-        link: "https://www.youtube.com/watch?v=ZxMdImpj4mk",
+        track: {
+            song: "Main Title",
+            link: "https://www.youtube.com/watch?v=ZxMdImpj4mk",
+        },
     },
     {
         title: "The Godfather",
@@ -51,7 +66,10 @@ const soundtracks = [
         genre: ["Orchestral", "Dramatic", "Classic"],
         label: "Paramount Music",
         image: "godfather.jpg",
-        link: "https://www.youtube.com/watch?v=MnSEZQEAPmE",
+        track: {
+            song: "The Godfather (Main Theme)",
+            link: "https://www.youtube.com/watch?v=MnSEZQEAPmE",
+        },
     },
     {
         title: "Jurassic Park",
@@ -60,7 +78,10 @@ const soundtracks = [
         genre: ["Orchestral", "Adventure", "Action"],
         label: "MCA Records",
         image: "jurassic.jpg",
-        link: "https://www.youtube.com/watch?v=BXsWn9DhF5g",
+        track: {
+            song: "Theme from Jurassic Park",
+            link: "https://www.youtube.com/watch?v=BXsWn9DhF5g",
+        },
     },
     {
         title: "Blade Runner",
@@ -69,7 +90,10 @@ const soundtracks = [
         genre: ["Electronic", "Futuristic", "Noir"],
         label: "Polydor Records",
         image: "bladerunner.jpg",
-        link: "https://www.youtube.com/watch?v=Jrg5lG90kzw",
+        track: {
+            song: "Main Titles",
+            link: "https://www.youtube.com/watch?v=Jrg5lG90kzw",
+        },
     },
     {
         title: "The Dark Knight",
@@ -78,7 +102,10 @@ const soundtracks = [
         genre: ["Orchestral", "Dark", "Action"],
         label: "Warner Bros. Records",
         image: "darkknight.jpg",
-        link: "https://www.youtube.com/watch?v=d9bBulaGOzk",
+        track: {
+            song: "Why So Serious?",
+            link: "https://www.youtube.com/watch?v=d9bBulaGOzk",
+        },
     },
     {
         title: "Inception",
@@ -87,7 +114,10 @@ const soundtracks = [
         genre: ["Orchestral", "Mind-Bending", "Thriller"],
         label: "Reprise Records",
         image: "inception.jpg",
-        link: "https://www.youtube.com/watch?v=c56t7upa8Bk",
+        track: {
+            song: "Time",
+            link: "https://www.youtube.com/watch?v=c56t7upa8Bk",
+        },
     },
     {
         title: "Pulp Fiction",
@@ -96,7 +126,10 @@ const soundtracks = [
         genre: ["Eclectic", "Retro"],
         label: "MCA Records",
         image: "pulpfiction.jpg",
-        link: "https://www.youtube.com/watch?v=ChCp6xuaFiA",
+        track: {
+            song: "Misirlou",
+            link: "https://www.youtube.com/watch?v=ChCp6xuaFiA",
+        },
     },
     {
         title: "The Lord of the Rings: The Fellowship of the Ring",
@@ -105,7 +138,10 @@ const soundtracks = [
         genre: ["Orchestral", "Fantasy", "Epic"],
         label: "Reprise Records",
         image: "lordoftherings.jpg",
-        link: "https://www.youtube.com/watch?v=-GS3QN_Yapc",
+        track: {
+            song: "The Fellowship Theme",
+            link: "https://www.youtube.com/watch?v=-GS3QN_Yapc",
+        },
     },
     {
         title: "Gladiator",
@@ -114,7 +150,10 @@ const soundtracks = [
         genre: ["Orchestral", "Epic", "Historical"],
         label: "Decca Records",
         image: "gladiator.jpg",
-        link: "https://www.youtube.com/watch?v=uJ96_LIXlko",
+        track: {
+            song: "Now We Are Free",
+            link: "https://www.youtube.com/watch?v=uJ96_LIXlko",
+        },
     },
     {
         title: "Jackie Brown",
@@ -123,7 +162,10 @@ const soundtracks = [
         genre: ["Soul", "Blaxploitation"],
         label: "Maverick Records",
         image: "jackie.jpg",
-        link: "https://www.youtube.com/watch?v=UbH3hSS1xCY",
+        track: {
+            song: "Across 110th Street",
+            link: "https://www.youtube.com/watch?v=UbH3hSS1xCY",
+        },
     },
     {
         title: "Superfly",
@@ -132,7 +174,10 @@ const soundtracks = [
         genre: ["Funk", "Soul", "Blaxploitation"],
         label: "Curtom Records",
         image: "superfly.jpg",
-        link: "https://www.youtube.com/watch?v=TD3mb6uVm80",
+        track: {
+            song: "Superfly",
+            link: "https://www.youtube.com/watch?v=TD3mb6uVm80",
+        },
     },
     {
         title: "Purple Rain",
@@ -141,7 +186,10 @@ const soundtracks = [
         genre: ["Pop", "Rock", "R&B"],
         label: "Warner Bros. Records",
         image: "purplerain.jpg",
-        link: "https://www.youtube.com/watch?v=347vCib_lMs",
+        track: {
+            song: "Purple Rain",
+            link: "https://www.youtube.com/watch?v=347vCib_lMs",
+        },
     },
     {
         title: "Reservoir Dogs",
@@ -150,7 +198,10 @@ const soundtracks = [
         genre: ["Soundtrack", "Rock", "Retro"],
         label: "MCA Records",
         image: "dogs.jpg",
-        link: "https://www.youtube.com/watch?v=ln7Vn_WKkWU",
+        track: {
+            song: "Little Green Bag",
+            link: "https://www.youtube.com/watch?v=ln7Vn_WKkWU",
+        },
     },
     {
         title: "Once Upon a Time in Hollywood",
@@ -159,7 +210,10 @@ const soundtracks = [
         genre: ["Soundtrack", "Retro", "Rock"],
         label: "Sony Music",
         image: "timeinhollywood.jpg",
-        link: "https://www.youtube.com/watch?v=dEnGjhDFtKY",
+        track: {
+            song: "Treat Her Right",
+            link: "https://www.youtube.com/watch?v=dEnGjhDFtKY",
+        },
     },
     {
         title: "The Thing",
@@ -168,7 +222,11 @@ const soundtracks = [
         genre: ["Orchestral", "Horror", "Suspense"],
         label: "Varèse Sarabande",
         image: "thething.jpg",
-        link: "https://www.youtube.com/watch?v=Mu8wT_pd4So",
+        track: {
+            song: "Humanity Part 1",
+            link: "https://www.youtube.com/watch?v=Mu8wT_pd4So",
+        },
     },
 ];
+
 module.exports = soundtracks;

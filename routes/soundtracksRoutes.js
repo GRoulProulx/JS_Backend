@@ -60,7 +60,7 @@ router.get(
 /**
  * Route pour récupérer les bandes sonores par leur genre
  */
-router.get("/genre/:genre", async (req, res) => {
+router.get("/genre", async (req, res) => {
     const { genre } = req.params;
     const soundtracks = [];
     console.log(genre);
