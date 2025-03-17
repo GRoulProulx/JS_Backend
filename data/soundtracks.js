@@ -106,7 +106,7 @@ const soundtracks = [
         image: "bladerunner.jpg",
         track: [
             {
-                song: "Main Titles",
+                song: "Main Title",
                 link: "https://www.youtube.com/watch?v=Jrg5lG90kzw",
             },
         ],

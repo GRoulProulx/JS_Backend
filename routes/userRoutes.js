@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../config/db");
-const { check, valemailationResult } = require("express-validator");
+const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -84,7 +84,6 @@ router.post(
 // marche pas avec emails
 
 // TODO : le ID de l'utilisateur doit être ajouté à la requête, comme les soundtracks!
-
 
 
 

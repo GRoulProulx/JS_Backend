@@ -70,31 +70,33 @@ router.get(
  */
 router.get(
     "/genre/:genre",
-    [
-        check("genre")
-            .trim()
-            .notEmpty()
-            .isLength({ min: 2, max: 50 })
-    ],
+    [check("genre").trim().notEmpty().isLength({ min: 2, max: 50 })],
     async (req, res) => {
-        const { genre } = req.params;
-        const soundtracks = [];
-        console.log(genre);
+        try {
+            const { genre } = req.params;
+            const soundtracks = [];
+            console.log(genre);
 
-        const docRefs = await db
-            .collection("soundtracks")
-            .where("genre", "array-contains", genre)
-            .get();
+            const docRefs = await db
+                .collection("soundtracks")
+                .where("genre", "array-contains", genre)
+                .get();
 
-        docRefs.forEach((doc) => {
-            const soundtrack = { id: doc.id, ...doc.data() };
-            soundtracks.push(soundtrack);
-        });
+            docRefs.forEach((doc) => {
+                const soundtrack = { id: doc.id, ...doc.data() };
+                soundtracks.push(soundtrack);
+            });
 
-        if (soundtracks.length == 0) {
-            return res.status(404).json({ msg: "Aucune bande sonore trouvé" });
+            if (soundtracks.length == 0) {
+                return res
+                    .status(404)
+                    .json({ msg: "Aucune bande sonore trouvé" });
+            }
+            return res.status(200).json(soundtracks);
+        } catch (erreur) {
+            console.log(erreur);
+            return res.status(500).json({ msg: "Une erreur est survenue" });
         }
-        return res.status(200).json(soundtracks);
     }
 );
 
@@ -103,38 +105,40 @@ router.get(
  */
 router.get(
     "/composer/:composer",
-    [
-        check("composer")
-            .trim()
-            .notEmpty()
-            .isLength({ min: 2, max: 100 })       
-    ],
+    [check("composer").trim().notEmpty().isLength({ min: 2, max: 100 })],
     async (req, res) => {
-        let { composer } = req.params;
+        try {
+            let { composer } = req.params;
 
-        composer = composer.split("-");
-        composer.forEach((piece, index) => {
-            composer[index] = piece[0].toUpperCase() + piece.slice(1);
-        });
-        composer = composer.join(" ");
+            composer = composer.split("-");
+            composer.forEach((piece, index) => {
+                composer[index] = piece[0].toUpperCase() + piece.slice(1);
+            });
+            composer = composer.join(" ");
 
-        const soundtracks = [];
+            const soundtracks = [];
 
-        const docRefs = await db
-            .collection("soundtracks")
-            .where("composer", "==", composer)
-            .orderBy("composer")
-            .get();
-        console.log(composer);
-        docRefs.forEach((doc) => {
-            const soundtrack = { id: doc.id, ...doc.data() };
-            soundtracks.push(soundtrack);
-        });
+            const docRefs = await db
+                .collection("soundtracks")
+                .where("composer", "==", composer)
+                .orderBy("composer")
+                .get();
+            console.log(composer);
+            docRefs.forEach((doc) => {
+                const soundtrack = { id: doc.id, ...doc.data() };
+                soundtracks.push(soundtrack);
+            });
 
-        if (soundtracks.length == 0) {
-            return res.status(404).json({ msg: "Aucune bande sonore trouvé" });
+            if (soundtracks.length == 0) {
+                return res
+                    .status(404)
+                    .json({ msg: "Aucune bande sonore trouvé" });
+            }
+            return res.status(200).json(soundtracks);
+        } catch (erreur) {
+            console.log(erreur);
+            return res.status(500).json({ msg: "Une erreur est survenue" });
         }
-        return res.status(200).json(soundtracks);
     }
 );
 
@@ -149,12 +153,17 @@ router.get(
             .isLength({ min: 20, max: 20 }),
     ],
     async (req, res) => {
-        //Destructuration
-        const { id } = req.params;
-        const docRef = await db.collection("soundtracks").doc(id).get();
-        const soundtrack = { id: docRef.id, ...docRef.data() };
+        try {
+            //Destructuration
+            const { id } = req.params;
+            const docRef = await db.collection("soundtracks").doc(id).get();
+            const soundtrack = { id: docRef.id, ...docRef.data() };
 
-        return res.json(soundtrack);
+            return res.json(soundtrack);
+        } catch (erreur) {
+            console.log(erreur);
+            return res.status(500).json({ msg: "Une erreur est survenue" });
+        }
     }
 );
 /*
@@ -173,20 +182,27 @@ router.post(
         check("year").escape().trim().notEmpty().isLength({ max: 2000 }),
     ],
     async (req, res) => {
-        const validationErrors = validationResult(req);
-        if (!validationErrors.isEmpty()) {
-            console.log(validationErrors);
+        try {
+            const validationErrors = validationResult(req);
+            if (!validationErrors.isEmpty()) {
+                console.log(validationErrors);
+
+                return res
+                    .status(400)
+                    .json({ msg: "Données invalides", validationErrors });
+            }
+            // const body = req.body;
+            const { body } = req;
+
+            await db.collection("soundtracks").add(body);
 
             return res
-                .status(400)
-                .json({ msg: "Données invalides", validationErrors });
+                .status(201)
+                .json({ msg: "La bande sonore a été ajouté" });
+        } catch (erreur) {
+            console.log(erreur);
+            return res.status(500).json({ msg: "Une erreur est survenue" });
         }
-        // const body = req.body;
-        const { body } = req;
-
-        await db.collection("soundtracks").add(body);
-
-        return res.status(201).json({ msg: "La bande sonore a été ajouté" });
     }
 );
 
@@ -215,18 +231,24 @@ router.post("/init", (req, res) => {
  */
 router.put(
     "/:id",
-    [
-        check("id").trim().notEmpty().isString().isLength({ min: 20, max: 30 })
-    ],
+    [check("id").trim().notEmpty().isString().isLength({ min: 20, max: 30 })],
 
     async (req, res) => {
-        const { id } = req.params;
-        const { body } = req;
+        try {
+            const { id } = req.params;
+            const { body } = req;
 
-        await db.collection("soundtracks").doc(id).update(body);
-        return res
-            .status(201)
-            .json({ msg: "La bande sonore a été modifié", soundtrack: body });
+            await db.collection("soundtracks").doc(id).update(body);
+            return res
+                .status(201)
+                .json({
+                    msg: "La bande sonore a été modifié",
+                    soundtrack: body,
+                });
+        } catch (erreur) {
+            console.log(erreur);
+            return res.status(500).json({ msg: "Une erreur est survenue" });
+        }
     }
 );
 
@@ -238,11 +260,18 @@ router.delete(
     [check("id").trim().notEmpty().isString().isLength({ min: 20, max: 20 })],
 
     async (req, res) => {
-        const { id } = req.params;
+        try {
+            const { id } = req.params;
 
-        await db.collection("soundtracks").doc(id).delete();
+            await db.collection("soundtracks").doc(id).delete();
 
-        return res.status(204).json({ msg: "La bande sonore a été supprimé" });
+            return res
+                .status(204)
+                .json({ msg: "La bande sonore a été supprimé" });
+        } catch (erreur) {
+            console.log(erreur);
+            return res.status(500).json({ msg: "Une erreur est survenue" });
+        }
     }
 );
 
