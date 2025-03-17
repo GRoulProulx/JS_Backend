@@ -2,12 +2,13 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const path = require("path");
-
+const cors = require("cors");
 const { check, validationResult } = require("express-validator");
 const server = express();
 dotenv.config();
 
 //Connexion à la base de données -- Permet de passer de la donnée json dans le body
+server.use(cors());
 server.use(express.json());
 server.use(express.urlencoded({ extended: true })); //Permet de passer de la donnée avec formulaire dans le body
 
