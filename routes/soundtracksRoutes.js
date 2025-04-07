@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const db = require("../config/db");
 const { check, validationResult } = require("express-validator");
+const auth = require("../middlewares/auth");
+
 
 /*
  * Route servant à récuperer tous les bandes sonores de la base de données.
@@ -171,6 +173,7 @@ router.get(
  */
 router.post(
     "/",
+    auth,
     [
         check("title")
             .escape()
@@ -210,7 +213,7 @@ router.post(
  * Route servant à initialiser la base de données
  */
 
-router.post("/init", (req, res) => {
+router.post("/init", auth, (req, res) => {
     try {
         const soundtracks = require("../data/soundtracks");
 
@@ -253,7 +256,7 @@ router.put(
 );
 
 /*
- * Route servant à supprimer une bande sonore
+ * Route servant à supprimer une bande sonore.
  */
 router.delete(
     "/:id",
