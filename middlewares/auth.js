@@ -1,24 +1,26 @@
 const jwt = require("jsonwebtoken");
 
 async function auth(req, res, next) {
-    
-
-    const jeton =
+    const token =
         req.headers["authorization"] &&
         req.headers["authorization"].split(" ")[1];
 
-    if (!jeton) {
-        return res.status(401).json({ msg: "Token expired!" });
+    if (!token) {
+        return res.status(401).json({ msg: "Accès refusé, jeton manquant." });
     }
 
-    const decode = await jwt.decode(jeton, process.env.JWT_SECRET);
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    if (!decode || decode.role > 0) {
-        return res.status(401).json({ msg: "Access Denied" });
+        if (!decoded) {
+            return res.status(401).json({ msg: "Accès refusé." });
+        }
+
+        req.user = decoded;
+        next();
+    } catch (error) {
+        return res.status(401).json({ msg: "Jeton invalide ou expiré." });
     }
-
-    req.utilisateur = decode;
-    next();
 }
 
 module.exports = auth;

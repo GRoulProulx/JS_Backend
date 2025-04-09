@@ -15,15 +15,17 @@ router.post(
         check("password").escape().trim().notEmpty(),
     ],
     async (req, res) => {
+        
         const { email, password } = req.body;
+
         const userRefs = await db
             .collection("users")
             .where("email", "==", email)
-            .limit(1)
             .get();
 
         const hash = await bcrypt.hash(password, 10);
         const user = { ...req.body, password: hash };
+        
         if (userRefs.docs.length > 0) {
             return res.status(400).json({ msg: "Utilisateur existant" });
         }
@@ -49,7 +51,7 @@ router.post(
                 .collection("users")
                 .where("email", "==", email)
                 .get();
-
+            
             if (userRefs.docs.length == 0) {
                 return res.status(400).json({ msg: "Mauvais courriel" });
             }
@@ -60,7 +62,7 @@ router.post(
             if (passwordMatch) {
                 delete user.password;
                 const option = {
-                    expiresIn: "2d",
+                    expiresIn: "1d",
                 };
                 const token = jwt.sign(user, process.env.JWT_SECRET, option);
                 return res
@@ -90,7 +92,7 @@ router.post(
 /*
  * Route servant à la modification d'un utilisateur
  */
-router.put(
+/* router.put(
     "/update/:email",
     [check("email").escape().trim().notEmpty().isEmail().normalizeEmail()],
     async (req, res) => {
@@ -114,12 +116,12 @@ router.put(
             });
         }
     }
-);
+); */
 
 /*
- * Route servant à la suression d'un utilisateur
+ * Route servant à la suppression d'un utilisateur
  */
-router.delete(
+/* router.delete(
     "/delete/:email",
     [check("email").escape().trim().notEmpty().isEmail().normalizeEmail()],
     async (req, res) => {
@@ -142,5 +144,5 @@ router.delete(
         }
     }
 );
-
+ */
 module.exports = router;
